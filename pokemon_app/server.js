@@ -4,6 +4,7 @@ const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const Show = require('./views/Show.jsx');
 const pokemonData = require('./models/pokemon');
+const mongoose = require('mongoose');
 
 const app = express();
 const port = 3001;
@@ -32,6 +33,12 @@ app.get('/pokemon/:id', (req, res) => {
     res.status(404).send('Pokemon not found');
     return;
   }
+
+  const db = 'mongodb+srv://adhudsond:WroQGBFl11ZC6ZnS@cluster0.8n1kphs.mongodb.net/';
+  mongoose
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log('MongoDB connection error:', err));
 
   const renderedShow = ReactDOMServer.renderToString(
     React.createElement(Show, { match: { params: { id } } })
