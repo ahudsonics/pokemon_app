@@ -38,4 +38,3 @@ app.get('/pokemon/:id', (req, res) => {
   );
   res.send(renderedShow);
 });
-
